@@ -12,7 +12,6 @@
 <%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
 <%@ page import="com.googlecode.objectify.ObjectifyService" %>
 <%@ page import="guestbook.Greeting" %>
-<%@ page import="guestbook.UserMail" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="com.googlecode.objectify.Objectify" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -36,23 +35,17 @@
       pageContext.setAttribute("user", user);
 %>
 <p>Hello, ${fn:escapeXml(user.nickname)}! (You can
-<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
+<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">make a post</a>.)</p>
 
 <!-- put your blog insert statement here-->
-<% //System.out.println(request.getRequestURI()); %>
-<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
-<a href="/Postblog.jsp">post a blog</a>.)</p>
 <%
     } else {
 %>
-<p>Hello!
-<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to include your name with greetings you post.</p>
 <%
     }
 %>
  
-<%  ObjectifyService.register(UserMail.class);
+<%  
 	ObjectifyService.register(Greeting.class);
 	List<Greeting> greetings = ObjectifyService.ofy().load().type(Greeting.class).list();   
 	Collections.sort(greetings); 
@@ -73,14 +66,8 @@ to include your name with greetings you post.</p>
         <p>Messages in Guestbook '${fn:escapeXml(guestbookName)}'.</p>
         <%
         for (Greeting greeting : greetings) {
-        	%>
-        	<!--  <p>Blog Title '${fn:escapeXml(guestbookName)}'.</p>-->
-        	<% 
             pageContext.setAttribute("greeting_content",
                                      greeting.getContent());
-        	%>
-        	<!--  <p>Blog Title '${fn:escapeXml(guestbookName)}'.</p>-->
-        	<% 
             pageContext.setAttribute("greeting_title",
                     greeting.getTitle());
             if (greeting.getUser() == null) {
@@ -102,27 +89,18 @@ to include your name with greetings you post.</p>
     }
 %>
  
-    <!--  <form action="/ofysign" method="post">
+    <form action="/ofysign" method="post">
+      <div><textarea name="title" rows="1" cols="60"></textarea></div>
+      <p>Enter_Title</p>
+      <!-- <div><input type="submit" value="Enter Title" /></div> -->
       <div><textarea name="content" rows="3" cols="60"></textarea></div>
-      <div><input type="submit" value="Post Greeting" /></div>
-      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-    </form>-->
- 	
- 	<form action="/ofymail" method="get">
-      <div><input type="submit" value="mail" /></div>
-      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-    </form>
-    
-     	<form action="/subscribe" method="post">
-      <div><input type="submit" value="subscribe" /></div>
+      <p>Enter_Content</p>
+      <div>
+      		<input type="submit" value="Make the post" />
+     </div>
+   	  <p>Back to <a href="/ofyguestbook.jsp">Main Page</a></p>
       <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
     </form>
- 	
- 	     	<form action="/unsubscribe" method="get">
-      <div><input type="submit" value="unsubscribe" /></div>
-      <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
-    </form>
- 	
- 	
+       
   </body>
 </html>

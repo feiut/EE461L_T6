@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
   <cron>
-    <url>/cron</url>
-
-    <description>every minute summary job</description>
-    <schedule>every 1 minutes</schedule>
-
+    <url>/crong</url>
+    <target>beta</target>
+   	<description>every day summary job</description>
+   	<schedule>every 24 hours</schedule>
   </cron>
 </cronentries>
