@@ -47,25 +47,23 @@
       pageContext.setAttribute("user", user);
 %>
 
-		<p style="margin:10px; text-align:center">
-		<img style="margin-bottom:10px" class="ui centered image" src="https://source.unsplash.com/84PTCoyzRBA/800x100">
-		<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>" class="ui button right floated">Sign Out</a>
-		Hello, ${fn:escapeXml(user.nickname)}!		
-		<a href="/Postshow.jsp" class="ui button blue left floated">View All</a>
-		</p>
+	 
 
+<p style="margin:10px; text-align:center">
+<img style="margin-bottom:10px" class="ui centered image" src="https://source.unsplash.com/ZLGFy3dNWfo/800x100">
+<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>" class="ui button right floated">Sign Out</a>
+Hello, ${fn:escapeXml(user.nickname)}!
+<a href="/ofyguestbook.jsp" class="ui button blue left floated">Main Page</a>
 </p>
 <%
     } else {
 %>
-
-		<p style="margin:10px; text-align:center">
-		<img style="margin-bottom:10px" class="ui centered image" src="https://source.unsplash.com/84PTCoyzRBA/800x100">
-		<a class="ui button right floated" href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a >
-		Hello! Sign in to post blog and subscribe!
-		<a href="/Postshow.jsp" class="ui button blue left floated">View All</a>
-		</p>
-
+<p style="margin:10px; text-align:center">
+<img style="margin-bottom:10px" class="ui centered image" src="https://source.unsplash.com/ZLGFy3dNWfo/800x100">
+<a href="/ofyguestbook.jsp" class="ui button blue left floated">Main Page</a>
+Hello! Sign in to post blog. You can still view all blogs without signing in.
+<a href="<%= userService.createLoginURL(request.getRequestURI()) %>" class="ui button right floated"> Sign In</a>
+</p>
 <%
     }
 %>
@@ -85,13 +83,10 @@
     	<a href="/Postblog.jsp" class="ui inverted button blue left">Post blog</a>
     	<div class = "ui divider"></div>
     	<%
-        TimeZone tz = TimeZone.getTimeZone("America/Mexico_City");
+        TimeZone tz = TimeZone.getTimeZone("America/Mexico City");
         DateFormat formatter = new SimpleDateFormat("MMM-dd-yyyy HH:mm:ss");
-        formatter.setTimeZone(tz);
        
-//        for (Greeting greeting : greetings) {
-          for (int i=0; i < Math.min(greetings.size(),5);i++) {	
-        	Greeting greeting = greetings.get(i);
+       for (Greeting greeting : greetings) {
 
             pageContext.setAttribute("greeting_content",
                                      greeting.getContent());
@@ -125,10 +120,6 @@
         }
     }
 %>
-<% 
-if (user!= null) {
-%>
-
     <form action="/subscribe" method="post">
       <div><input type="submit" class="ui inverted button blue left floated" value="subscribe" /></div>
       <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
@@ -139,7 +130,6 @@ if (user!= null) {
       <input type="hidden" name="guestbookName" value="${fn:escapeXml(guestbookName)}"/>
     </form> 
     <p style="margin-bottom:60px"> </p>
-<%  }%>
     </div>
    </div>	
   </body>
