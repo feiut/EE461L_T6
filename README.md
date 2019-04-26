@@ -1,2 +1,6 @@
 # EE461L_T6
-tutorial6 google engine
+
+UT Blog
+
+Online Blog project based on Google App Engine
+Developed in Eclipse
